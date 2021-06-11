@@ -1,0 +1,14 @@
+body {
+    background-color: #47597e;
+}
+
+.container {
+    text-align: center;
+    margin: auto;
+    
+}
+
+#gameBoard {
+    border: 3px solid black;
+    background-color: #dbe6fd;
+}
