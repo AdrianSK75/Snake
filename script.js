@@ -2,7 +2,6 @@ const snakeboard = document.getElementById("gameBoard");
 const stats = document.getElementById("stats");
 const ctx = snakeboard.getContext("2d");
 
-
 const manage = {
     board: {
         border: 'black',
@@ -12,7 +11,6 @@ const manage = {
         x: 0, 
         y: 0,
     },
-
     dx: -10,
     dy: 0,
     changing_direction: false,
@@ -50,17 +48,23 @@ class Snake {
         this.snake.unshift(head);
     
         if(this.snake[0].x === manage.food.x && this.snake[0].y === manage.food.y) {
+            let highscore = localStorage.getItem("highscore");
             this.score += 10;
 
-            document.getElementById("score").innerHTML = "Score: " + this.score;
-            
+            if(highscore !== null) {
+                if(this.score > highscore) {
+                    localStorage.setItem("highscore", this.score);
+                }
+            } else {
+                localStorage.setItem("highscore", this.score);
+            }
+
+            document.getElementById("score").innerHTML = "Score: " + this.score + " HighScore: " + localStorage.getItem("highscore");
             generate_food();
         } else {
             this.snake.pop();
         }   
-    }
-
-    
+    }   
 }
 
 const snake = new Snake([{x: 200, y: 200}, {x: 190, y: 200}, {x: 180 , y: 200},], 0);
@@ -71,6 +75,7 @@ document.addEventListener("keydown", move_controller);
 function StartGame() {
             document.getElementById("press").remove();
             document.getElementById("score").innerHTML = "Score: " + 0;
+   
             Main();
 }
 
